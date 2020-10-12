@@ -29,6 +29,10 @@ for content in doc.paragraphs:
                 print("check")
                 questionnaire[content.text].append(option.text)
                 j= j+1
+            if "ANSWER" in option.text.upper():
+                print("get answer")
+                questionnaire[content.text].append(option.text)
+                break    
 print(questionnaire) 
 
 # for content in doc.paragraphs:

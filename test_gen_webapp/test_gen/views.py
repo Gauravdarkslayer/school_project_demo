@@ -27,6 +27,10 @@ def doc_processing(request):
                     print("check")
                     questionnaire[content.text].append(option.text)
                     j= j+1
+                if "ANSWER" in option.text.upper():
+                print("get answer")
+                questionnaire[content.text].append(option.text)
+                break        
     print(questionnaire)
 
     return render(request,"show_questions.html",context=questionnaire)
