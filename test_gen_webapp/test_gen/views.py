@@ -7,10 +7,19 @@ def show_doc_upload_page(request):
 
 
 def doc_processing(request):
-    file = request.FILES["myfile"]
-    current_user_email = request.session["email"]
+    file = request.FILES["mydocument"]
+    # print(request.FILES)
+    print("this is file object",file)
+    # current_user_email = request.session["email"]
     import docx
-    doc = docx.Document('file.docx')
+    try:
+        doc = docx.Document('file.docx')
+        print("success")
+    except Exception as e:
+        print(e)
+    
+    doc = docx.Document(file)
+    print("this workds")
     questionnaire={}
     i=1
 
@@ -33,4 +42,4 @@ def doc_processing(request):
                     break        
     print(questionnaire)
 
-    return render(request,"show_questions.html",context=questionnaire)
+    return render(request,"show_questions.html",{'context':questionnaire})

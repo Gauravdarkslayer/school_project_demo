@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- {{ context }} -->
+
+    {% for question,options in context.items %}
+      <b>{{ question }}</b><br>
+      <ul>
+        <li>{{ options.0 }}</li>
+        <li>{{ options.1 }}</li>
+        <li>{{ options.2 }}</li>
+        <li>{{ options.3 }}</li>
+      </ul>
+    {{ options.4 }}
+    <br>
+    <br>
+    {% endfor %}
+</body>
+</html>
