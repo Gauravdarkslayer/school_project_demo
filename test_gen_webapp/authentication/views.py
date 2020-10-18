@@ -5,13 +5,15 @@ def login_page(request):
     return render(request,'login.html')
 
 def login(request):
-    email = request.POST["emailid"]
+    email = request.POST["email"]
     password= request.POST["password"]
     if user.objects.filter(email_id=email).exists():
-        if user.objects.filter(email_id=email).password == password:
+        print(user.objects.filter(email_id=email).values('password')[0]['password'])
+        if user.objects.filter(email_id=email).values('password')[0]['password'] == password:
             print("ot hgere")
             return render(request,"choose.html")
         else:
+            
             return render(request,"login.html",{"message":"invalid credentials"})
     else:
         return render(request,"login.html",{"message":"doesnt exists"})

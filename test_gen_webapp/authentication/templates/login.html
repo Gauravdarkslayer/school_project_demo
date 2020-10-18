@@ -6,9 +6,12 @@
     <title>Login</title>
 </head>
 <body>
-    <form method="post" action="/choose/">
+    <form method="post" action="/login/">
         {% csrf_token %}
         {{ form.as_p }}
+        {% if message %}
+            {{message}}
+        {% endif %}
         <input type="email" name="email"><br>
         <input type="password" name="password"><br>
         <input type="submit">
