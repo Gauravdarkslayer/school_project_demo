@@ -20,5 +20,17 @@
     <br>
     <br>
     {% endfor %}
+
+    {% for heading,questions in fill_blanks.items %}
+      <b>{{ heading }}</b><br>
+      <ul>
+        {% for question in questions %}
+        <li>{{ question }}</li>
+        {% endfor %}
+      </ul>
+    <br>
+    <br>
+    {% endfor %}
+
 </body>
 </html>
