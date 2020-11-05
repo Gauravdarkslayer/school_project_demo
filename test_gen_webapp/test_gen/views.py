@@ -21,6 +21,8 @@ def doc_processing(request):
     doc = docx.Document(file)
     print("this works")
     questionnaire={}
+    explanation={}
+    diagram={}
     fill_blanks = {}
     i=1
     number_of_iterations = 0
@@ -53,9 +55,31 @@ def doc_processing(request):
                     continue
                 else:
                     break
+        elif("explain") in content.text.lower():
+            explanation[content.text]=[]
+            next_index = number_of_iterations+1
+            for i in range(next_index, len(doc.paragraphs)):
+                if "Write" in doc.paragraphs[i].text:
+                    explanation[content.text].append(doc.paragraphs[i].text)
+                elif " " == doc.paragraphs[i].text:
+                    continue
+                else:
+                    break
+        elif("draw") in content.text.lower():
+            diagram[content.text]=[]
+            next_index = number_of_iterations+1
+            for i in range(next_index, len(doc.paragraphs)):
+                if "diagram" in doc.paragraphs[i].text:
+                    diagram[content.text].append(doc.paragraphs[i].text)
+                elif " " == doc.paragraphs[i].text:
+                    continue
+                else:
+                    break
 
+            print("Explanation",explanation)
+            print("Diagram",diagram)
             print("Data of Fill in the blanks is ", fill_blanks)
         number_of_iterations += 1
     print(questionnaire)
 
-    return render(request,"show_questions.html",{'context':questionnaire, 'fill_blanks':fill_blanks})
+    return render(request,"mcq.html",{'context':questionnaire, 'fill_blanks':fill_blanks,"explain":explanation,"diagram":diagram})

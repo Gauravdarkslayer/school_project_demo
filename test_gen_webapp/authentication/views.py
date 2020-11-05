@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import user
 # Create your views here.
 def login_page(request):
-    return render(request,'login.html')
+    return render(request,'signin.html')
 
 def login(request):
     email = request.POST["email"]
@@ -14,9 +14,9 @@ def login(request):
             return render(request,"choose.html")
         else:
             
-            return render(request,"login.html",{"message":"invalid credentials"})
+            return render(request,"signin.html",{"message":"invalid credentials"})
     else:
-        return render(request,"login.html",{"message":"doesnt exists"})
+        return render(request,"signin.html",{"message":"doesnt exists"})
 
 def signup_page(request):
     return render(request,"signup.html")
@@ -35,3 +35,7 @@ def signup(request):
 
 def choose(request):
     return render(request,"choose.html")
+
+
+def homepage(request):
+    return render(request, 'index.html')
