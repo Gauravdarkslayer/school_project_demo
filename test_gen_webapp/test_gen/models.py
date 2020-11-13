@@ -15,8 +15,8 @@ from authentication.models import user
 class organization_test_create(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
-    logo = models.ImageField(upload_to="/media/")
+    logo = models.ImageField(upload_to="media/")
     test_name = models.CharField(max_length=100)
     college_name = models.CharField(max_length=100, null=True,blank=True)
-    cam_micro = models.CharField(choices=(("yes","yes"),("no","no")))
+    cam_micro = models.CharField(max_length=3, choices=(("yes","yes"),("no","no")))
     test_duration = models.CharField(max_length=100)

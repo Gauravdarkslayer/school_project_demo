@@ -7,10 +7,13 @@ from django.contrib import messages
 def show_doc_upload_page(request):
     return render(request,'doc_upload_1.html')
 
+def register_new_org(request):
+    return render(request, 'register_org.html')
 
 def doc_processing(request):
     file = request.FILES["mydocument"]
-    # print(request.FILES)
+    
+    print(request.FILES)
     print("this is file object",file)
     # current_user_email = request.session["email"]
     import docx
@@ -88,6 +91,7 @@ def doc_processing(request):
 
 
 def preview(request):
+    print(request.POST)
     if request.method == "POST":
         try:
             name = request.POST["organization_name"]
