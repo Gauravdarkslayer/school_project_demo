@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import user
+from django.http import HttpResponseRedirect
 # Create your views here.
 def login_page(request):
     return render(request,'signin.html')
@@ -11,7 +12,7 @@ def login(request):
         print(user.objects.filter(email_id=email).values('password')[0]['password'])
         if user.objects.filter(email_id=email).values('password')[0]['password'] == password:
             print("ot hgere")
-            return render(request,"choose.html")
+            return HttpResponseRedirect('/test_gen/')
         else:
             
             return render(request,"signin.html",{"message":"invalid credentials"})
@@ -25,12 +26,13 @@ def signup(request):
     full_name = request.POST["full_name"]
     email = request.POST["emailid"]
     password= request.POST["password"]
+    print("I am inside down")
 
     if user.objects.filter(email_id=email).exists():
         return render(request,"signup.html",{"message":"already exists"})
 
     user.objects.create(full_name=full_name, email_id=email,password=password)
-    return render(request,"login.html")
+    return render(request,"signin.html")
 
 
 def choose(request):
