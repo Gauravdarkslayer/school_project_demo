@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import organization_test_create
+from django.contrib import messages
 # Create your views here.
 
 def show_doc_upload_page(request):
@@ -83,3 +85,41 @@ def doc_processing(request):
     print(questionnaire)
 
     return render(request,"mcq.html",{'context':questionnaire, 'fill_blanks':fill_blanks,"explain":explanation,"diagram":diagram})
+
+
+def preview(request):
+    if request.method == "POST":
+        try:
+            name = request.POST["organization_name"]
+            description = request.POST["description"]
+            logo = request.FILES["logo"]
+            test_name = request.POST["test_name"]
+            college_name = request.POST["college_name"]
+            cam_micro = request.POST["cam_micro"]
+            test_duration = request.POST["test_duration"]
+
+            organization_test_create.objects.create(
+                name = name,
+                description=description,
+                logo = logo,
+                test_name = test_name,
+                college_name = college_name,
+                cam_micro = cam_micro,
+                test_duration = test_duration
+            )
+            context = {
+                "name":name,
+                "description":description,
+                "logo":logo,
+                "test_name":test_name,
+                "college_name":college_name,
+                "cam_micro":cam_micro,
+                "test_duration":test_duration
+            }
+            messages.success(request,"Test created successfully")
+            return render(request,"form.html",context=context)
+        except Exception as e:
+            messages.error(request,e)
+            return render(request,"form.html")
+    else:
+        return render(request,"form.html")
