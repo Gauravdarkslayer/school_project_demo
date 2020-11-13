@@ -5,7 +5,7 @@ from django.contrib import messages
 # Create your views here.
 
 def show_doc_upload_page(request):
-    return render(request,'doc_upload.html')
+    return render(request,'doc_upload_1.html')
 
 
 def doc_processing(request):
