@@ -195,7 +195,8 @@ def preview(request):
                 "test_duration":test_duration
             }
             messages.success(request,"Test created successfully")
-            return render(request,"form.html",{'preview_data':preview_data,'context':questionnaire, 'fill_blanks':fill_blanks,"explain":explanation,"diagram":diagram})
+            print(">>>>>>>>sucess")
+            return render(request,"preview.html",{'preview_data':preview_data,'context':questionnaire, 'fill_blanks':fill_blanks,"explain":explanation,"diagram":diagram})
         except Exception as e:
             messages.error(request,e)
             return render(request,"form.html")
