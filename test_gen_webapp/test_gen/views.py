@@ -199,6 +199,6 @@ def preview(request):
             return render(request,"preview.html",{'preview_data':preview_data,'context':questionnaire, 'fill_blanks':fill_blanks,"explain":explanation,"diagram":diagram})
         except Exception as e:
             messages.error(request,e)
-            return render(request,"form.html")
+            return render(request,"register_org.html")
     else:
-        return render(request,"form.html")
+        return render(request,"register_org.html")

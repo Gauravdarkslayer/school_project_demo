@@ -8,4 +8,4 @@ class user(models.Model):
     full_name= models.CharField(max_length=100)
     email_id = models.EmailField(unique=True)
     password = models.CharField(max_length=500)
-    role = models.CharField(choices=roles,max_length=50)
+    role = models.CharField(choices=roles,max_length=50,blank=True)
