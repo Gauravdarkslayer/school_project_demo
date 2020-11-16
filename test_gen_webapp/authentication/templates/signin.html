@@ -58,11 +58,14 @@
 						<span class="focus-input100"></span>
 					</div>
 
-					
+					{% if message %}
+								{{message}}
+								{% endif %}
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button type = "submit" class="login100-form-btn">
+								
 								Sign In
 							</button>
 						</div>

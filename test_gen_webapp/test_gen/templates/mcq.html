@@ -6,6 +6,13 @@
     <title>MCQ question template - Bootsnipp.com</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      p {
+        text-align: center;
+        font-size: 60px;
+        margin-top: 0px;
+      }
+      </style>
     <style type="text/css">
         @import('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.min.css') 
 
@@ -99,6 +106,10 @@
   color: #fff;
   background-color: #5cb85c;
 }
+#wrapper {
+  float: right;
+  position: fixed;
+}
 
 .funkyradio-danger input[type="radio"]:checked ~ label:before,
 .funkyradio-danger input[type="checkbox"]:checked ~ label:before {
@@ -123,7 +134,211 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+  <script>
+
+    // Put event listeners into place
+window.addEventListener("DOMContentLoaded", function() {
+    // Grab elements, create settings, etc.
+    var canvas = document.getElementById('canvas');
+    console.log("nothing happend")
+    var context = canvas.getContext('2d');
+    var video = document.getElementById('video');
+    var mediaConfig =  { video: true };
+    var errBack = function(e) {
+        console.log('An error has occurred!', e)
+    };
+
+    // Put video listeners into place
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+            //video.src = window.URL.createObjectURL(stream);
+            video.srcObject = stream;
+            video.play();
+        });
+    }
+
+    /* Legacy code below! */
+    else if(navigator.getUserMedia) { // Standard
+        navigator.getUserMedia(mediaConfig, function(stream) {
+            video.src = stream;
+            video.play();
+        }, errBack);
+    } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+        navigator.webkitGetUserMedia(mediaConfig, function(stream){
+            video.src = window.webkitURL.createObjectURL(stream);
+            video.play();
+        }, errBack);
+    } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+        navigator.mozGetUserMedia(mediaConfig, function(stream){
+            video.src = window.URL.createObjectURL(stream);
+            video.play();
+        }, errBack);
+    }
+
+    document.getElementById("snap").style.display = "block";
+    document.getElementById("download").style.display = "none";
+    document.getElementById("reset").style.display = "none";
+  
+    
+
+    // download screenshot
+    document.getElementById('download').addEventListener('click', function() {
+
+
+        ///code missing here!
+
+
+        // window.location.reload();
+    });
+
+    //reset
+    document.getElementById('reset').addEventListener('click', function() {
+        window.location.reload();
+    });
+
+}, false);
+
+function takePic(){
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    context.drawImage(video,0,-73,609,565);
+    document.getElementById("snap").style.display = "none";
+    document.getElementById("download").style.display = "block";
+    document.getElementById("reset").style.display = "block";
+}
+
+// Set the date we're counting down to
+var countDownDate = new Date("Nov 14, 2021 12:17:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML =hours + "h "
+  + minutes + "m " + seconds + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+
+function getScreen() {
+    html2canvas(document.querySelector("#capture")).then(function (canvas) {
+      var fileupload = canvas.toDataURL("image/png")
+      $("#blank").attr('href', fileupload);
+      $("#blank").attr('download', 'ETDatacon.png');
+      $("#blank")[0].click();
+        var fd = new FormData();
+        // var files = $('#file')[0].files[0];
+        fd.append('file',fileupload);
+
+console.log(fd)
+        $.ajax({
+            url: 'upload.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                // if(response != 0){
+                //     $("#img").attr("src",response); 
+                //     $(".preview img").show(); // Display image element
+                // }else{
+                //     alert('file not uploaded');
+                // }
+            },
+        });
+    });
+  }    
+
+</script>
+
+<div id="wrapper">
+      <div id="band">
+      
+      </div>   
+      <div id="capture" align= "right">
+        <img src="Photoframe.png" class = "one"/>
+        <video id="video" width="300" height="300" autoplay></video>
+        <canvas id="canvas" width="300" height="300"></canvas>
+       </div>
+          
+  </div>
+
+
+
 <div class="container">
+  <div class="row">
+	    <br/>
+        <div class="panel " style="background-color: #7f00ee;">
+             <div class="panel-heading">       
+            
+              <img src="/media/media/{{preview_data.logo}}" height="48px" width="48px" align="left" />    
+              <center>
+                  <pre>
+                  
+                 
+                  Name:{{preview_data.name}}
+                  Description:{{preview_data.description}}
+                  <p id="demo"></p>
+
+                  </pre>
+                </center>
+             </div><!--.panel-heading-->
+        
+<div class = "panel-body">
+      <h4 style="color: whitesmoke;">  Read the Details  carefully</h4>
+           </div>
+<ul class = "list-group">
+    <li class = "list-group-item">
+          <div class="checkbox">
+       
+            <label for="checkbox">
+              Test Name : {{preview_data.test_name}}
+            </label>
+        </div>
+    </li>
+    <li class = "list-group-item">
+          <div class="checkbox">
+        
+            <label for="checkbox">
+              College Name : {{preview_data.college_name}}
+            </label>
+        </div>
+    </li>
+    <li class = "list-group-item">
+          <div class="checkbox">
+           
+            <label for="checkbox">
+                Test Duration  :{{preview_data.test_duration}}
+            </label>
+        </div>
+    </li>
+  
+	
+   </ul>
+   
+        </div>
+</div>
+
+
+
+
+
 {% for question,options in context.items %}
 	<div class="row">
 	    <br/>

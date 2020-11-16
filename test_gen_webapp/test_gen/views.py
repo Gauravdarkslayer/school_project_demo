@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import organization_test_create
 from django.contrib import messages
+from django.conf import settings
 # Create your views here.
 
 def show_doc_upload_page(request):
@@ -97,6 +98,8 @@ def preview(request):
             name = request.POST["organization_name"]
             description = request.POST["description"]
             logo = request.FILES["logo"]
+           
+            
             test_name = request.POST["test_name"]
             college_name = request.POST["college_name"]
             cam_micro = request.POST["cam_micro"]
@@ -188,7 +191,7 @@ def preview(request):
             preview_data = {
                 "name":name,
                 "description":description,
-                "logo":logo,
+                "logo": logo,
                 "test_name":test_name,
                 "college_name":college_name,
                 "cam_micro":cam_micro,
@@ -196,7 +199,7 @@ def preview(request):
             }
             messages.success(request,"Test created successfully")
             print(">>>>>>>>sucess")
-            return render(request,"preview.html",{'preview_data':preview_data,'context':questionnaire, 'fill_blanks':fill_blanks,"explain":explanation,"diagram":diagram})
+            return render(request,"mcq.html",{'preview_data':preview_data,'context':questionnaire, 'fill_blanks':fill_blanks,"explain":explanation,"diagram":diagram})
         except Exception as e:
             messages.error(request,e)
             return render(request,"register_org.html")
